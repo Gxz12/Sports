@@ -1,4 +1,4 @@
-package com.example.sports.myApplication.entity;
+package com.example.sports.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -8,6 +8,7 @@ import java.util.Date;
 @Entity
 @Table(name ="_RDC")
 public class RunningDataCollection {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -18,14 +19,32 @@ public class RunningDataCollection {
     @NotBlank
     private long time;
 
-    @NotBlank
-    private int distance;
+    public int getSpeed() {
+        return speed;
+    }
 
-    public RunningDataCollection(long id, Date date, long time, int distance) {
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    @NotBlank
+    private int speed;
+
+    private double distance;
+
+    public RunningDataCollection(long id, Date date, long time, int speed) {
         this.id = id;
         this.date = date;
         this.time = time;
-        this.distance = distance;
+        this.speed = speed;
+    }
+
+    public RunningDataCollection(long id, Date date, long time, int speed,double distance) {
+        this.id = id;
+        this.date = date;
+        this.time = time;
+        this.speed = speed;
+        this.distance =distance;
     }
 
     public RunningDataCollection(){
@@ -56,11 +75,11 @@ public class RunningDataCollection {
         this.time = time;
     }
 
-    public int getDistance() {
+    public double getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 

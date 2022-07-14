@@ -1,4 +1,4 @@
-package com.example.sports.myApplication.entity;
+package com.example.sports.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

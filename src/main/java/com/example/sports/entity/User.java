@@ -1,6 +1,5 @@
-package com.example.sports.myApplication.entity;
+package com.example.sports.entity;
 
-import com.example.sports.myApplication.entity.Course;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -49,6 +48,42 @@ public class User {
 
     public void setCoursesList(List<Course> coursesList) {
         this.coursesList = coursesList;
+    }
+
+    @JsonBackReference
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "_RDC_list",
+            joinColumns = @JoinColumn (name = "RDC_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    private List<RunningDataCollection> rdcList;
+
+    public List<RunningDataCollection> getRdcList() {
+        return rdcList;
+    }
+
+    public void setRdcList(List<RunningDataCollection> rdtList) {
+        this.rdcList = rdcList;
+    }
+
+    public int getTotalDistance(List<RunningDataCollection> rdcList){
+        int re = 0;
+        for(RunningDataCollection rdc: rdcList){
+            re += rdc.getDistance();
+        }
+        return re;
+    }
+
+    public long getTotalTime(List<RunningDataCollection> rdcList){
+        long re = 0;
+        for(RunningDataCollection rdc : rdcList){
+            re += rdc.getTime();
+        }
+        return re;
+    }
+
+    public double getAvgPacePerHour(){
+        double hour = this.getTotalTime(this.getRdcList()) / 3600.0;
+        return this.getTotalTime(this.getRdcList())/ hour;
     }
    /* @ManyToMany
     @JsonBackReference
